@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-=_@iid(8yet%0*+yu9hl*=4f4vdemo7r&!m3d+eo_(mh6$53ra
 DEBUG = os.getenv("IS_PRODUCTION", True)
 
 ALLOWED_HOSTS = [
-    os.getenv("APP_HOST")
+    "th46d554he.execute-api.us-west-2.amazonaws.com"
 ]
 
 

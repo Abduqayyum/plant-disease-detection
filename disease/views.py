@@ -11,6 +11,8 @@ from .serializers import ImageSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.viewsets import ModelViewSet
+import keras.utils as keras_utils
+import tensorflow_hub as hub
 
 
 class_names = ['Apple_Apple_scab', 'Apple_Black_rot', 'Apple_healthy',
@@ -95,7 +97,8 @@ class ImageModelVS(ModelViewSet):
 
 class PredictionView(APIView):
     def post(self, request, pk):
-        model = load_model("efficiennet_model_2")
+        with keras_utils.custom_object_scope({'KerasLayer': hub.KerasLayer}):
+              model = keras.models.load_model("efficiennet_model_aug.h5")
         image = Image.objects.get(id=pk)
         uploaded_img = image.image 
         pred = predict_image(uploaded_img, model, class_names=class_names)
